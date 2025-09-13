@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Bot, User, Send } from "lucide-react";
 import { PulseLoader } from "react-spinners";
-import { v4 as uuidv4 } from "uuid/dist/index.js";
+import { v4 as uuidv4 } from "uuid";
 
 
 const MainChatBot = ({ phqResult }) => {
