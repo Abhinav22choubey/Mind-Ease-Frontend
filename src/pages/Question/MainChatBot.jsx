@@ -58,7 +58,7 @@ const MainChatBot = ({ phqResult }) => {
 
     try {
       setLoad(true);
-      const res = await fetch("http://localhost:4000/chat", {
+      const res = await fetch("https://mind-ease-backend.vercel.app/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ _id: uniqueId, msg: input }),

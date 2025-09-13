@@ -66,7 +66,7 @@ const PHQ9App = ({
 
     // ---- Async backend call (for chatbot only) ----
     try {
-      const res = await fetch("http://localhost:4000/mental-health", {
+      const res = await fetch("https://mind-ease-backend.vercel.app/mental-health", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ _id: userId, phq9: phq9Array }),
