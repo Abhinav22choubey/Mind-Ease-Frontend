@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Bot, User, Send } from "lucide-react";
+import { Bot, User, Send, X } from "lucide-react";
 import { PulseLoader } from "react-spinners";
 import { v4 as uuidv4 } from "uuid";
+import Typewriter from "typewriter-effect";
 
-
-const MainChatBot = ({ phqResult }) => {
+const MainChatBot = ({ phqResult, onClose }) => {
   const scrollRef = useRef(null);
   const uniqueId = phqResult?.userId || uuidv4();
 
@@ -26,10 +26,7 @@ const MainChatBot = ({ phqResult }) => {
   // ---- Show suggestion + followUp after PHQ9 ----
   useEffect(() => {
     if (phqResult?.phq9) {
-      // Start loader
       setLoad(true);
-
-      // Step 1: after 1.5s show suggestion
       setTimeout(() => {
         setMessages((prev) => [
           ...prev,
@@ -37,7 +34,6 @@ const MainChatBot = ({ phqResult }) => {
         ]);
         setLoad(false);
 
-        // Step 2: after another 1s show follow-up response
         if (phqResult.followUpResponse) {
           setLoad(true);
           setTimeout(() => {
@@ -84,11 +80,23 @@ const MainChatBot = ({ phqResult }) => {
   return (
     <div className="max-h-screen min-h-[100%] flex flex-col border-l border-gray-300">
       {/* Header */}
-      <div className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white p-4 flex items-center space-x-3">
-        <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-          <Bot className="w-4 h-4" />
+      <div className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white p-4 flex items-center justify-between">
+        <div className="flex items-center space-x-3">
+          <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+            <Bot className="w-4 h-4" />
+          </div>
+          <h3 className="font-semibold">AI ChatBot</h3>
         </div>
-        <h3 className="font-semibold">AI ChatBot</h3>
+
+        {/* Close button */}
+        {onClose && (
+          <button
+            onClick={onClose}
+            className="p-1 rounded-full hover:bg-white/20 transition"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        )}
       </div>
 
       {/* Messages */}
@@ -116,13 +124,26 @@ const MainChatBot = ({ phqResult }) => {
                 ) : (
                   <User className="w-4 h-4 mt-1" />
                 )}
-                <p className="text-sm leading-relaxed">{msg.text}</p>
+
+                {/* 👇 AI messages with typewriter */}
+                {msg.sender === "AI" ? (
+                  <Typewriter
+                    options={{
+                      strings: [msg.text],
+                      autoStart: true,
+                      delay: 30, // typing speed
+                      cursor: "", // remove blinking cursor
+                       loop: false, 
+                    }}
+                  />
+                ) : (
+                  <p className="text-sm leading-relaxed">{msg.text}</p>
+                )}
               </div>
             </div>
           </div>
         ))}
 
-        {/* Loader while waiting */}
         {load && (
           <div className="flex justify-start">
             <div className="bg-white border rounded-2xl px-4 py-3 max-w-[70%] flex items-center space-x-2 shadow">
@@ -133,7 +154,7 @@ const MainChatBot = ({ phqResult }) => {
         )}
       </div>
 
-      {/* Input box */}
+      {/* Input */}
       <div className="p-4 border-t bg-white">
         <div className="flex space-x-3">
           <input

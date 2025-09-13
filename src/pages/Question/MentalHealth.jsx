@@ -6,6 +6,13 @@ const MentalHealthDashboard = () => {
   const [isCompleted, setIsCompleted] = useState(false);
   const [answers, setAnswers] = useState({}); // store PHQ-9 answers
   const [phqResult, setPhqResult] = useState(null); // backend response
+  const [showChatbot, setShowChatbot] = useState(true); // toggle chatbot
+
+  const handleRetake = () => {
+    setIsCompleted(false);
+    setAnswers({});
+    setPhqResult(null);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
@@ -20,20 +27,66 @@ const MentalHealthDashboard = () => {
         />
       ) : (
         // Split screen: PHQ-9 Result + Chatbot
-        <div className="grid grid-cols-1 lg:grid-cols-2 h-screen">
-          <div className="h-full overflow-y-auto">
+        <div
+          className={`grid h-screen ${
+            showChatbot ? "grid-cols-1 lg:grid-cols-2" : "grid-cols-1"
+          }`}
+        >
+          {/* Left Side: Results */}
+          <div className="h-full overflow-y-auto p-6">
             <PHQ9App
               isCompleted={isCompleted}
               setIsCompleted={setIsCompleted}
               answers={answers}
               setAnswers={setAnswers}
-              setPhqResult={setPhqResult}   // ✅ FIXED
+              setPhqResult={setPhqResult}
               phqResult={phqResult}
             />
+
+            {/* Action Buttons */}
+            <div className="flex flex-wrap gap-4 justify-center mt-6">
+              <button
+                onClick={handleRetake}
+                className="px-6 py-3 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-medium shadow-md hover:shadow-lg hover:scale-105 transition"
+              >
+                Take Another Test
+              </button>
+
+              <button className="px-6 py-3 rounded-full bg-white border border-gray-300 text-gray-700 font-medium hover:bg-gray-100 transition">
+                Home
+              </button>
+
+              <button className="px-6 py-3 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500 text-white font-medium shadow-md hover:shadow-lg hover:scale-105 transition">
+                Explore More
+              </button>
+
+              <button className="px-6 py-3 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 text-white font-medium shadow-md hover:shadow-lg hover:scale-105 transition">
+                Counselor Support
+              </button>
+
+              <button className="px-6 py-3 rounded-full bg-gradient-to-r from-pink-400 to-rose-500 text-white font-medium shadow-md hover:shadow-lg hover:scale-105 transition">
+                Psychiatrist Consultation
+              </button>
+
+              {/* Toggle Chatbot */}
+              <button
+                onClick={() => setShowChatbot(!showChatbot)}
+                className="px-6 py-3 rounded-full bg-gradient-to-r from-gray-400 to-gray-600 text-white font-medium shadow-md hover:shadow-lg hover:scale-105 transition"
+              >
+                {showChatbot ? "Hide Chatbot" : "Show Chatbot"}
+              </button>
+            </div>
           </div>
-          <div className="h-full border-l border-gray-300">
-            <MainChatBot phqResult={phqResult} />
-          </div>
+
+          {/* Right Side: Chatbot */}
+          {showChatbot && (
+            <div className="h-full border-l border-gray-300">
+              <MainChatBot
+                phqResult={phqResult}
+                onClose={() => setShowChatbot(false)}
+              />
+            </div>
+          )}
         </div>
       )}
     </div>
