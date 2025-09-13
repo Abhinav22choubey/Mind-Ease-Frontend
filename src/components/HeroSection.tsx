@@ -1,6 +1,8 @@
 import { ArrowRight, Shield, Clock, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Routes, Route, Link } from "react-router-dom";
+import MentalHealth from "../pages/Question/MentalHealth";
 
 const HeroSection = () => {
   const features = [
@@ -57,13 +59,16 @@ const HeroSection = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+             <Link to="/test"> 
             <Button 
               size="lg"
               className="bg-gradient-primary shadow-glow hover:shadow-primary transition-all duration-300 hover:scale-105 text-lg px-8 py-6"
-            >
-              Start Your Journey
+            > 
+               Start Your Journey
+            
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
+            </Link>
             
             <Button 
               variant="outline" 
