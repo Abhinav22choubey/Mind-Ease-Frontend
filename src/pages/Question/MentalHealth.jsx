@@ -75,6 +75,26 @@ const MentalHealthDashboard = () => {
               >
                 {showChatbot ? "Hide Chatbot" : "Show Chatbot"}
               </button>
+              <div className="mt-12 text-center">
+                <div className="p-6 bg-gradient-to-r from-destructive/10 to-destructive/20 border border-destructive/30 rounded-xl max-w-2xl mx-auto">
+                  <h3 className="font-semibold text-destructive mb-4">
+                    Need Immediate Help?
+                  </h3>
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                    <Button variant="destructive" className="shadow-lg">
+                      <span className="mr-2">📞</span>
+                      Call Mental Health Helpline: 14416
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="border-destructive/30 hover:bg-destructive/10"
+                    >
+                      <span className="mr-2">🚨</span>
+                      Emergency: 108
+                    </Button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
