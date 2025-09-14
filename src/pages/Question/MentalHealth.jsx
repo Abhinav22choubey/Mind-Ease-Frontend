@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import PHQ9App from "./PHQ9App";
 import MainChatBot from "./MainChatBot";
+import { Button } from "../../components/ui/button";
+
 
 const MentalHealthDashboard = () => {
   const [isCompleted, setIsCompleted] = useState(false);
