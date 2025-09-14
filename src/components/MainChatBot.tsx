@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import Typewriter from "typewriter-effect";
+
 // generate a unique ID
 const uniqueId = uuidv4();
 
@@ -120,7 +121,7 @@ const MainChatBot = () => {
                   <div>
                     <CardTitle className="text-lg">AI Chat Interface</CardTitle>
                     <CardDescription className="text-primary-foreground/80 text-sm">
-                      Connected to Mental care Chat Bot 
+                      Connected to Mental care Chat Bot
                     </CardDescription>
                   </div>
                 </div>
@@ -154,19 +155,21 @@ const MainChatBot = () => {
                             <User className="w-4 h-4 mt-1 flex-shrink-0" />
                           )}
                           {msg.sender === "AI" ? (
-  <Typewriter
-    options={{
-      strings: [msg.text],
-      autoStart: true,
-      delay: 30,
-      cursor: "",
-      loop: false,
-    }}
-  />
-) : (
-  <p className="text-sm leading-relaxed">{msg.text}</p>
-)}
-
+                            <Typewriter
+                              options={{
+                                strings: [msg.text],
+                                autoStart: true,
+                                delay: 30,
+                                deleteSpeed: Infinity,
+                                cursor: "",
+                                loop: false,
+                              }}
+                            />
+                          ) : (
+                            <p className="text-sm leading-relaxed">
+                              {msg.text}
+                            </p>
+                          )}
                         </div>
                       </div>
                     </div>
