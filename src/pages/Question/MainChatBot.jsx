@@ -131,9 +131,10 @@ const MainChatBot = ({ phqResult, onClose }) => {
                     options={{
                       strings: [msg.text],
                       autoStart: true,
-                      delay: 30, // typing speed
-                      cursor: "", // remove blinking cursor
-                       loop: false, 
+                      delay: 30,
+                      deleteSpeed: Infinity,
+                      cursor: "",
+                      loop: false,
                     }}
                   />
                 ) : (
